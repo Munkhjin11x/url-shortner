@@ -57,9 +57,9 @@
 import express from "express";
 import bp from "body-parser";
 import mongoose from "mongoose";
-import Url from "./schema/Url.js";
 import { nanoid } from "nanoid";
 import dotenv from 'dotenv'
+import Url from './schema/Url.js'
 
 dotenv.config()
 
@@ -73,9 +73,9 @@ app.get("/", async (_, response) => {
   const res = await Url.find();
   response.send(res).end();
 });
+
 app.get("/:url", async (request, response) => {
   const { url } = request.params;
-
   const res = await Url.findOne({
     shortUrl: url,
   });
@@ -84,22 +84,14 @@ app.get("/:url", async (request, response) => {
 
 app.post("/", async (request, response) => {
   const { url } = request.body;
-  if (!url) {
-    response.status(400).send({ error: "URL is required." }).end();
-    return;
-  }
 
-  try {
-    const newUrl = await Url.create({
-      longUrl: url,
-      shortUrl: nanoid(10),
-    });
-    response.send({ success: true, url: newUrl }).end();
-  } catch (error) {
-    console.error(error);
-    response.status(500).send({ success: false, error: "Internal Server Error" }).end();
-  }
+  const newUrl = await Url.create({
+    longUrl: url,
+    shortUrl: nanoid(10),
+  });
+  response.send({ success: true, url: newUrl }).end();
 });
+
 app.delete("/:url", async (request, response) => {
   const { url } = request.params;
 
