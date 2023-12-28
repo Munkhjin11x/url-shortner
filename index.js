@@ -1,9 +1,9 @@
-import express from "express";
-import mongoose from "mongoose";
-import { nanoid } from "nanoid";
-import dotenv from 'dotenv'
-import Url from './schema/Url.js'
-import cors from "cors"
+const express = require("express");
+const mongoose = require("mongoose");
+const nanoid = require("nanoid");
+const dotenv = require('dotenv');
+const Url = require('./schema/Url.js');
+const cors = require("cors");
 
 dotenv.config()
 
@@ -23,11 +23,15 @@ app.get("/", async (_, response) => {
 });
 
 app.get("/:url", async (request, response) => {
-  const { url } = request.params;
-  const res = await Url.findOne({
-    shortUrl: url,
-  });
-  response.redirect(res.longUrl);
+  try {
+    const { url } = request.params;
+    const res = await Url.findOne({
+      shortUrl: url,
+    });
+    response.redirect(res.longUrl);
+  } catch (error) {
+    response.send(error)
+  }
 });
 
 app.post("/", async (request, response) => {
