@@ -48,6 +48,7 @@ app.delete("/:url", async (request, response) => {
 app.listen(PORT, async () => {
   try {
     await mongoose.connect(MONGODB_URL);
+    console.log(PORT, 'running')
   } catch (error) {
     console.log("error");
   }
