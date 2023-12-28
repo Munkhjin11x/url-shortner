@@ -8,7 +8,7 @@ import cors from "cors"
 dotenv.config()
 
 const PORT = process.env.PORT || 8000;
-const MONGODB_URL = process.env.MONGODB_URL
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://Munkhjin:99279353Aa!@cluster0.dhvxd3q.mongodb.net/?retryWrites=true&w=majority"
 
 
 console.log(PORT, MONGODB_URL)
